@@ -36,6 +36,8 @@ def scan():
         seek += aux_requests[j] - curr
         curr = aux_requests[j]
         disk[curr] = curr
+    
+    print(disk)
 
 
 def binary_search(start, requests):
@@ -52,3 +54,5 @@ def binary_search(start, requests):
     return ans
 
 
+if __name__ == '__main__':
+    scan()
