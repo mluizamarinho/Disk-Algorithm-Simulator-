@@ -14,7 +14,7 @@ write_requests = [2, 10, 8, 5, 33, 28, 17, 4, 23, 1, 7, 49, 41, 36, 12]
 
 aux_requests = sorted(write_requests)
 
-start_value = 0
+start_value = random.randint(0,49)
 
 def scan():
 
@@ -26,12 +26,11 @@ def scan():
 
     times = dict()
 
-    start_time = time.time()
-
     seek = 0
 
 
     for i in range(index_start, -1, -1):
+        start_time = time.time()
         seek += curr - aux_requests[i]
         curr = aux_requests[i]
         disk[curr] = curr
@@ -39,6 +38,7 @@ def scan():
         indx += 1
 
     for j in range(index_start+1, len(aux_requests)):
+        start_time = time.time()
         seek += aux_requests[j] - curr
         curr = aux_requests[j]
         disk[curr] = curr
@@ -63,9 +63,10 @@ def binary_search(start, requests):
 
 sum = 0
 
-for t in scan():
+for t in scan().values():
     sum += t
 
-
+print("Start position: " + str(start_value))
+print("Requests: " + str(write_requests))
 print("Seek time: " + str(sum/len(aux_requests)))
 
