@@ -35,8 +35,10 @@ def c_scan(requests, start):
 
     #tempo de seek para atender o primeiro é zero
     aux[id] = 0
+
     #calcula a posição da ultima requisição na direção em que a agulha esta indo
     last_request = last_req(requests, aux)
+    
     while(pending_req(aux)):
         id += 1
         time += requests[id] - requests[id - 1]
@@ -44,10 +46,12 @@ def c_scan(requests, start):
         print(aux)
               
         if(id == len(requests) - 1 or id == last_request):
-            time += requests[id] - requests[0]
-            id = 0
-            aux[id] = 0
-    
+            if(pending_req):
+                last_request = last_req(requests, aux)
+                time += requests[id] - requests[0]
+                id = 0
+                aux[id] = 0
+        
     return time
 
 requests = [98, 183, 37, 122, 14, 124]
