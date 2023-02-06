@@ -1,52 +1,56 @@
+# -*- coding: utf-8 -*-
+
 import random
-import time
-# The disk have 50 trails and 1 sector
+# O disco tem 25 trilhas e 1 setor
 
 disk = []
 
-for d in range(50):
+for d in range(25):
     disk.append(-1)
 
-# The disk is empty
 
+# tempo de seek entre trilhas para mover o braço em ms
 
-write_requests = [2, 10, 8, 5, 33, 28, 17, 4, 23, 1, 7, 49, 41, 36, 12]
+seek_time = 1.0
+
+#requisições de escrita
+
+write_requests = [2, 10, 8, 5, 17, 4, 23, 1, 7, 12]
 
 aux_requests = sorted(write_requests)
+
+# Escolhe uma posição para a agulha começar
 
 start_value = random.randint(0,49)
 
 def scan():
 
     index_start = binary_search(start_value, aux_requests)
-
-    indx = 0
-
     curr = start_value
-
-    times = dict()
+    time = 0
 
     seek = 0
 
+    # do start para a esqerda
 
     for i in range(index_start, -1, -1):
-        start_time = time.time()
         seek += curr - aux_requests[i]
+        time += seek * 1
         curr = aux_requests[i]
         disk[curr] = curr
-        times[indx] = time.time() - start_time
-        indx += 1
+
+    #da esquerda para direita
 
     for j in range(index_start+1, len(aux_requests)):
-        start_time = time.time()
         seek += aux_requests[j] - curr
+        time += seek * 1
         curr = aux_requests[j]
         disk[curr] = curr
-        times[indx] = time.time() - start_time
-        indx += 1
 
-    return times
+    return seek
 
+
+#verifica índice do maior número que é menor ou igual ao valor inicial da agulha
 
 def binary_search(start, requests):
     i = 0
@@ -61,12 +65,11 @@ def binary_search(start, requests):
             l = mid - 1
     return ans
 
-sum = 0
-
-for t in scan().values():
-    sum += t
+if __name__ == '__main__':
+    v = scan()
 
 print("Start position: " + str(start_value))
 print("Requests: " + str(write_requests))
-print("Seek time: " + str(sum/len(aux_requests)))
-
+print("Seek time: " + str(v))
+print("Average seek time: " + str(v/len(aux_requests)))
+print("Disk after requests: " + str(disk))
