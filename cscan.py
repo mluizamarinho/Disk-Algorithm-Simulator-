@@ -9,11 +9,20 @@ rotate = 4.5
 # taxa de transferencia em MB/s
 transfer = 54 
 
-def pending_rq(list):
+def pending_req(list):
   for c in list:
     if(c == 1):
       return True
   return False 
+
+def last_req(list, aux):
+    maior = 0
+    i = 0 
+    for c in range(len(list)):
+        if(list[c] > maior and aux[c] != 0):
+            maior = list[c]
+            i = c
+    return i    
 
 def c_scan(requests, start):
 
@@ -26,13 +35,15 @@ def c_scan(requests, start):
 
     #tempo de seek para atender o primeiro é zero
     aux[id] = 0
-  
-    while(pending_rq(aux)):
+    #calcula a posição da ultima requisição na direção em que a agulha esta indo
+    last_request = last_req(requests, aux)
+    while(pending_req(aux)):
         id += 1
         time += requests[id] - requests[id - 1]
         aux[id] = 0
+        print(aux)
               
-        if(id == len(requests) - 1 or aux[id + 1] == 0):
+        if(id == len(requests) - 1 or id == last_request):
             time += requests[id] - requests[0]
             id = 0
             aux[id] = 0
@@ -42,7 +53,7 @@ def c_scan(requests, start):
 requests = [98, 183, 37, 122, 14, 124]
 
 # head começando na trilha mais interna
-start = 0
+start = 3
 
 const = c_scan(requests, start)
 
