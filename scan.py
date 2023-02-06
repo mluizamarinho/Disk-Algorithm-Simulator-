@@ -1,3 +1,4 @@
+
 # -*- coding: utf-8 -*-
 
 import random
@@ -9,19 +10,24 @@ for d in range(25):
     disk.append(-1)
 
 
+
 # tempo de seek entre trilhas para mover o braço em ms
 
 seek_time = 1.0
+
 
 #requisições de escrita
 
 write_requests = [2, 10, 8, 5, 17, 4, 23, 1, 7, 12]
 
+
 aux_requests = sorted(write_requests)
+
 
 # Escolhe uma posição para a agulha começar
 
 start_value = random.randint(0,49)
+
 
 def scan():
 
@@ -50,6 +56,7 @@ def scan():
     return seek
 
 
+
 #verifica índice do maior número que é menor ou igual ao valor inicial da agulha
 
 def binary_search(start, requests):
@@ -65,8 +72,10 @@ def binary_search(start, requests):
             l = mid - 1
     return ans
 
+
 if __name__ == '__main__':
     v = scan()
+
 
 print("Start position: " + str(start_value))
 print("Requests: " + str(write_requests))
