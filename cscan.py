@@ -9,12 +9,14 @@ rotate = 4.5
 # taxa de transferencia em MB/s
 transfer = 54 
 
+#verifica se há alguma requisição ainda pendente
 def pending_req(list):
   for c in list:
     if(c == 1):
       return True
   return False 
 
+#retorna a posição da trilha mais distante na direção em que a agulha esta indo
 def last_req(list, aux):
     maior = 0
     i = 0 
