@@ -46,11 +46,12 @@ def c_scan(requests, start):
         print(aux)
               
         if(id == len(requests) - 1 or id == last_request):
-            last_request = last_req(requests, aux)
-            time += requests[id] - requests[0]
-            id = 0
-            aux[id] = 0
-    
+            if(pending_req):
+                last_request = last_req(requests, aux)
+                time += requests[id] - requests[0]
+                id = 0
+                aux[id] = 0
+        
     return time
 
 requests = [98, 183, 37, 122, 14, 124]
