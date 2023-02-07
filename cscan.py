@@ -32,7 +32,7 @@ def c_scan(requests, start):
     requests = sorted(requests)
     aux = [1] * len(requests)
 
-    id = start 
+    id = binary_search(start, requests)
     time = 0
 
     #tempo de seek para atender o primeiro é zero
@@ -56,11 +56,23 @@ def c_scan(requests, start):
         
     return time
 
+def binary_search(start, requests):
+    i = 0
+    l = len(requests)-1
+    ans = 0
+    while i <= l:
+        mid = (i+l) // 2
+        if (requests[mid] <= start):
+            ans = mid
+            i = mid + 1
+        else:
+            l = mid - 1
+    return ans
+
 requests = [98, 183, 37, 122, 14, 124]
 
 # head começando na trilha mais interna
-start = 3
-
+start = int(input())
 const = c_scan(requests, start)
 
 print("Tempo total:", const)
