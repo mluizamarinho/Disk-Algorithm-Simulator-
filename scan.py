@@ -1,4 +1,3 @@
-
 # -*- coding: utf-8 -*-
 
 import random
@@ -26,7 +25,7 @@ aux_requests = sorted(write_requests)
 
 # Escolhe uma posição para a agulha começar
 
-start_value = random.randint(0,49)
+start_value = random.randint(0,24)
 
 
 def scan():
